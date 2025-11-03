@@ -1,0 +1,16 @@
+📜 Logging all output to ./logs/preprocess_20251030_2204.log
+🧾 原始数据读取: 30000 行, 30000 唯一用户
+🧾 去重后: 30000 行, 30000 唯一用户
+   ↳ 本阶段丢失 0 个用户
+✅ 用户分组一致性通过。
+🧾 特征衍生后: 30000 行, 30000 唯一用户
+   ↳ 本阶段丢失 0 个用户
+⚠️ 90days_purchase_time 检测到 801 条异常值 (未删除，仅标记)
+⚠️ 90days_purchase_amount 检测到 676 条异常值 (未删除，仅标记)
+⚠️ 90days_coupon_time 检测到 319 条异常值 (未删除，仅标记)
+🧾 异常值检测后: 30000 行, 30000 唯一用户
+   ↳ 本阶段丢失 0 个用户
+
+✅ 数据清洗完成
+📁 清洗后: ./ab_coupon_clean_debug.csv
+📁 分组平衡报告: ./group_balance_report.csv
