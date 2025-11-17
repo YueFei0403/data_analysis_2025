@@ -1,0 +1,39 @@
+[INFO] Logging initialized → ./results/output.log
+             Userid  90days_purchase_time  ...  Last_purchase_day        is_add
+count  30000.000000          30000.000000  ...       30000.000000  30000.000000
+mean   15000.500000              3.471700  ...          46.075067      0.337700
+std     8660.398374              2.755259  ...          25.680565      0.472934
+min        1.000000              1.000000  ...           1.000000      0.000000
+25%     7500.750000              2.000000  ...          24.000000      0.000000
+50%    15000.500000              3.000000  ...          46.000000      0.000000
+75%    22500.250000              4.000000  ...          68.000000      1.000000
+max    30000.000000             30.000000  ...          90.000000      1.000000
+
+[8 rows x 8 columns]
+      group  group_code
+0       对照组           2
+10000  实验组1           0
+20000  实验组2           1
+
+>>> Shapes before split: >>>
+X: (30000, 1)
+Y: (30000, 1)
+T: (30000,)
+W: (30000, 6)
+
+>>> Checking Treatment Class Balance >>>
+Treatment 0: 7002 samples (33.34%)
+Treatment 1: 7006 samples (33.36%)
+Treatment 2: 6992 samples (33.30%)
+CausalForestDML (T0 vs T1) Training Completed !!!
+>>>>>>>>>>>>>>>>>>>>>
+Average Treatment Effect (ATE): -0.01
+Treatment Effect Std-Dev: 0.41
+Treatment Effect Min: -0.34
+Treatment Effect Max: 0.79
+CausalForestDML (T0 vs T2) Training Completed !!!
+>>>>>>>>>>>>>>>>>>>>>
+Average Treatment Effect (ATE): -0.17
+Treatment Effect Std-Dev: 0.11
+Treatment Effect Min: -0.24
+Treatment Effect Max: 0.15

@@ -15,6 +15,23 @@ from econml.orf import DMLOrthoForest, DROrthoForest
 from econml.cate_interpreter import SingleTreeCateInterpreter
 from econml.sklearn_extensions.linear_model import WeightedLassoCVWrapper
 
+import os, sys
+
+log_path = "./results/output.log"
+os.makedirs(os.path.dirname(log_path), exist_ok=True)
+
+# If old log exists, remove it and print a message
+if os.path.exists(log_path):
+    os.remove(log_path)
+    print(f"[INFO] Old log file removed: {log_path}")
+else:
+    print(f"[INFO] No previous log file found at: {log_path}")
+
+# Redirect stdout and stderr to a fresh file
+sys.stdout = open(log_path, "w", encoding="utf-8")
+sys.stderr = sys.stdout  # optional — log errors too
+print(f"[INFO] Logging initialized → {log_path}")
+
 plt.rcParams['font.sans-serif'] = ['DejaVu Sans']
 plt.rcParams['axes.unicode_minus'] = False
 np.random.seed(42)
@@ -94,27 +111,28 @@ for u, c in zip(unique, counts):
 mask_01 = (T_train == 0) | (T_train == 1)
 cf_01 = CausalForestDML(
     model_t=RandomForestClassifier(n_estimators=100, max_depth=5),
-    model_y=RandomForestRegressor(n_estimators=100, max_depth=5),
+    model_y=RandomForestClassifier(n_estimators=100, max_depth=5),
     n_estimators=100,
     min_samples_leaf=20,
     discrete_treatment=True,
     discrete_outcome=True,
     random_state=42
 )
-te_01_pred = cf_01.effect(X_test)
-te_01_lower, te_01_upper = cf_01.effect_interval(X_test, alpha=0.05)
+cf_01.fit(Y_train[mask_01], T_train[mask_01], X=X_train[mask_01])
+print("CausalForestDML (T0 vs T1) Training Completed !!!")
+te_01_pred = cf_01.effect(X_test, T0=0, T1=1)
+te_01_lower, te_01_upper = cf_01.effect_interval(X_test, T0=0, T1=1, alpha=0.05)
+print(">>>>>>>>>>>>>>>>>>>>>")
 print(f"Average Treatment Effect (ATE): {te_01_pred.mean():.2f}")
 print(f"Treatment Effect Std-Dev: {te_01_pred.std():.2f}")
 print(f"Treatment Effect Min: {te_01_pred.min():.2f}")
 print(f"Treatment Effect Max: {te_01_pred.max():.2f}")
-cf_01.fit(Y_train[mask_01], T_train[mask_01], X=X_train[mask_01])
-print("\n <<<<<<<< CausalForestDML (T0 vs T1) Training Completed !!! <<<<<<<<<<<< \n")
 
 # === Compare T0 and T2 ===
 mask_02 = (T_train == 0) | (T_train == 2)
 cf_02 = CausalForestDML(
     model_t=RandomForestClassifier(n_estimators=100, max_depth=5),
-    model_y=RandomForestRegressor(n_estimators=100, max_depth=5),
+    model_y=RandomForestClassifier(n_estimators=100, max_depth=5),
     n_estimators=100,
     min_samples_leaf=20,
     discrete_treatment=True,
@@ -122,9 +140,10 @@ cf_02 = CausalForestDML(
     random_state=42
 )
 cf_02.fit(Y_train[mask_02], T_train[mask_02], X=X_train[mask_02])
-print("\n <<<<<<<< CausalForestDML (T0 vs T2) Training Completed !!! <<<<<<<<<<<< \n")
-te_02_pred = cf_02.effect(X_test)
-te_02_lower, te_02_upper = cf_02.effect_interval(X_test, alpha=0.05)
+print("CausalForestDML (T0 vs T2) Training Completed !!!")
+te_02_pred = cf_02.effect(X_test, T0=0, T1=2)
+te_02_lower, te_02_upper = cf_02.effect_interval(X_test, T0=0, T1=2, alpha=0.05)
+print(">>>>>>>>>>>>>>>>>>>>>")
 print(f"Average Treatment Effect (ATE): {te_02_pred.mean():.2f}")
 print(f"Treatment Effect Std-Dev: {te_02_pred.std():.2f}")
 print(f"Treatment Effect Min: {te_02_pred.min():.2f}")
