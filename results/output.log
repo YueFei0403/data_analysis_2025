@@ -1,39 +1,79 @@
 [INFO] Logging initialized → ./results/output.log
-             Userid  90days_purchase_time  ...  Last_purchase_day        is_add
-count  30000.000000          30000.000000  ...       30000.000000  30000.000000
-mean   15000.500000              3.471700  ...          46.075067      0.337700
-std     8660.398374              2.755259  ...          25.680565      0.472934
-min        1.000000              1.000000  ...           1.000000      0.000000
-25%     7500.750000              2.000000  ...          24.000000      0.000000
-50%    15000.500000              3.000000  ...          46.000000      0.000000
-75%    22500.250000              4.000000  ...          68.000000      1.000000
-max    30000.000000             30.000000  ...          90.000000      1.000000
-
-[8 rows x 8 columns]
+             Userid  90days_purchase_time  90days_per_purchase_price  90days_purchase_amount  90days_coupon_time  90days_coupon_ratio  Last_purchase_day        is_add
+count  30000.000000          30000.000000               30000.000000            30000.000000        30000.000000         30000.000000       30000.000000  30000.000000
+mean   15000.500000              3.471700                 162.896533              566.799033            1.520067             0.379714          46.075067      0.337700
+std     8660.398374              2.755259                  75.433387              562.004247            1.910110             0.362608          25.680565      0.472934
+min        1.000000              1.000000                  21.000000               27.000000            0.000000             0.000000           1.000000      0.000000
+25%     7500.750000              2.000000                 113.000000              230.000000            0.000000             0.000000          24.000000      0.000000
+50%    15000.500000              3.000000                 148.000000              402.000000            1.000000             0.333333          46.000000      0.000000
+75%    22500.250000              4.000000                 195.000000              700.000000            2.000000             0.666667          68.000000      1.000000
+max    30000.000000             30.000000                1076.000000             9875.000000           27.000000             1.000000          90.000000      1.000000
+Encoding mapping:, os_mapping
+   Userid  User_os  90days_purchase_time  90days_per_purchase_price  90days_purchase_amount  90days_coupon_time  90days_coupon_ratio  Last_purchase_day group  is_add  User_os_encoded
+0       1      iOS                     2                        102                     204                   0                  0.0                 60   对照组       1                1
+1       2  Android                     1                        113                     113                   0                  0.0                 46   对照组       1                0
+2       3      iOS                     2                        128                     256                   1                  0.5                 32   对照组       0                1
+3       4      iOS                     5                        201                    1005                   2                  0.4                 83   对照组       0                1
+4       5      iOS                     4                        736                    2944                   0                  0.0                 43   对照组       1                1
       group  group_code
 0       对照组           2
 10000  实验组1           0
 20000  实验组2           1
 
 >>> Shapes before split: >>>
-X: (30000, 1)
+X: (30000, 7)
 Y: (30000, 1)
 T: (30000,)
-W: (30000, 6)
 
 >>> Checking Treatment Class Balance >>>
 Treatment 0: 7002 samples (33.34%)
 Treatment 1: 7006 samples (33.36%)
 Treatment 2: 6992 samples (33.30%)
-CausalForestDML (T0 vs T1) Training Completed !!!
->>>>>>>>>>>>>>>>>>>>>
-Average Treatment Effect (ATE): -0.01
-Treatment Effect Std-Dev: 0.41
-Treatment Effect Min: -0.34
-Treatment Effect Max: 0.79
-CausalForestDML (T0 vs T2) Training Completed !!!
->>>>>>>>>>>>>>>>>>>>>
-Average Treatment Effect (ATE): -0.17
-Treatment Effect Std-Dev: 0.11
-Treatment Effect Min: -0.24
-Treatment Effect Max: 0.15
+=================================================
+       Numerical Breakdown of ITE T0_vs_T1       
+=================================================
+Count: 9000
+Mean (ATE): -0.0229
+Std Dev: 0.5423
+Min: -0.8761
+Max: 0.8907
+1th percentile: -0.8545
+5th percentile: -0.8356
+10th percentile: -0.8189
+25th percentile: -0.0661
+50th percentile: -0.0152
+75th percentile: 0.0308
+90th percentile: 0.8052
+95th percentile: 0.8247
+99th percentile: 0.8672
+Skewness: 0.0525
+Kurtosis: -0.7637
+----------------------------------------
+Positive Effects: 3445 (38.28%)
+Negative Effects: 5555 (61.72%)
+Zero (≈ no effect): 0 (0.00%)
+=================================================
+=================================================
+       Numerical Breakdown of ITE T0_vs_T2       
+=================================================
+Count: 9000
+Mean (ATE): -0.1730
+Std Dev: 0.3707
+Min: -0.7876
+Max: 0.1749
+1th percentile: -0.7658
+5th percentile: -0.7419
+10th percentile: -0.7253
+25th percentile: -0.6840
+50th percentile: 0.0648
+75th percentile: 0.0900
+90th percentile: 0.1091
+95th percentile: 0.1200
+99th percentile: 0.1433
+Skewness: -0.7551
+Kurtosis: -1.4043
+----------------------------------------
+Positive Effects: 6095 (67.72%)
+Negative Effects: 2905 (32.28%)
+Zero (≈ no effect): 0 (0.00%)
+=================================================
