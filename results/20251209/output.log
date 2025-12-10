@@ -1,0 +1,248 @@
+[INFO] Logging initialized → results/20251209/output.log
+X shape: (30000, 7)
+Y shape: (30000,)
+T shape: (30000,)
+
+Training model for T1 vs Control...
+
+Training model for T2 vs Control...
+
+Inferences...
+
+=== Final Output ===
+       Userid   cate_T1   cate_T2 best_strategy_label
+0           1  0.029873  0.073852                实验组2
+1           2  0.029445  0.067548                实验组2
+2           3  0.023005  0.113663                实验组2
+3           4 -0.031427  0.065009                实验组2
+4           5  0.003305  0.074516                实验组2
+...       ...       ...       ...                 ...
+29995   29996  0.035665  0.145163                实验组2
+29996   29997 -0.005773  0.089655                实验组2
+29997   29998  0.824728  0.091425                实验组1
+29998   29999  0.020564  0.098039                实验组2
+29999   30000 -0.829097 -0.718105                 对照组
+
+[30000 rows x 4 columns]
+[Saved strategy tree → results/20251209/strategy_tree.png]
+
+========= Best Strategy =========
+Node: if num__90days_coupon_ratio <= 0.575 (Gini=0.642, Samples=30000, ClassDist=[0.2803, 0.2589, 0.4608], BestStrategy=2, Confidence=0.461)
+├── True branch:
+│   Node: if num__90days_per_purchase_price <= 150.500 (Gini=0.446, Samples=20736, ClassDist=[0.3308256172839506, 0.0025559413580246914, 0.6666184413580247], BestStrategy=2, Confidence=0.667)
+│   ├── True branch:
+│   │   Node: if num__90days_purchase_amount <= 212.500 (Gini=0.007, Samples=10580, ClassDist=[0.0, 0.0036862003780718335, 0.9963137996219281], BestStrategy=2, Confidence=0.996)
+│   │   ├── True branch:
+│   │   │   Node: if num__Last_purchase_day <= 45.500 (Gini=0.018, Samples=4243, ClassDist=[0.0, 0.00919160971011077, 0.9908083902898892], BestStrategy=2, Confidence=0.991)
+│   │   │   ├── True branch:
+│   │   │   │   Leaf: Gini=0.001, Samples=2094, ClassDist=[0.0, 0.0004775549188156638, 0.9995224450811844], BestStrategy=2, Confidence=1.000
+│   │   │   └── False branch:
+│   │   │       Leaf: Gini=0.035, Samples=2149, ClassDist=[0.0, 0.017682643089809214, 0.9823173569101907], BestStrategy=2, Confidence=0.982
+│   │   └── False branch:
+│   │       Leaf: Gini=0.000, Samples=6337, ClassDist=[0.0, 0.0, 1.0], BestStrategy=2, Confidence=1.000
+│   └── False branch:
+│       Node: if num__90days_purchase_time <= 3.500 (Gini=0.439, Samples=10156, ClassDist=[0.6754627806222923, 0.0013784954706577393, 0.32315872390705], BestStrategy=0, Confidence=0.675)
+│       ├── True branch:
+│       │   Leaf: Gini=0.000, Samples=6859, ClassDist=[1.0, 0.0, 0.0], BestStrategy=0, Confidence=1.000
+│       └── False branch:
+│           Node: if num__90days_purchase_amount <= 742.000 (Gini=0.009, Samples=3297, ClassDist=[0.00030330603579011223, 0.004246284501061571, 0.9954504094631483], BestStrategy=2, Confidence=0.995)
+│           ├── True branch:
+│           │   Leaf: Gini=0.064, Samples=422, ClassDist=[0.0, 0.03317535545023697, 0.966824644549763], BestStrategy=2, Confidence=0.967
+│           └── False branch:
+│               Leaf: Gini=0.001, Samples=2875, ClassDist=[0.00034782608695652176, 0.0, 0.9996521739130435], BestStrategy=2, Confidence=1.000
+└── False branch:
+    Node: if num__90days_per_purchase_price <= 157.500 (Gini=0.279, Samples=9264, ClassDist=[0.167206390328152, 0.832685664939551, 0.0001079447322970639], BestStrategy=1, Confidence=0.833)
+    ├── True branch:
+    │   Node: if num__90days_per_purchase_price <= 152.500 (Gini=0.020, Samples=5290, ClassDist=[0.010207939508506616, 0.9897920604914934, 0.0], BestStrategy=1, Confidence=0.990)
+    │   ├── True branch:
+    │   │   Node: if num__90days_per_purchase_price <= 151.500 (Gini=0.001, Samples=4978, ClassDist=[0.0006026516673362796, 0.9993973483326637, 0.0], BestStrategy=1, Confidence=0.999)
+    │   │   ├── True branch:
+    │   │   │   Leaf: Gini=0.000, Samples=4907, ClassDist=[0.0, 1.0, 0.0], BestStrategy=1, Confidence=1.000
+    │   │   └── False branch:
+    │   │       Leaf: Gini=0.081, Samples=71, ClassDist=[0.04225352112676056, 0.9577464788732394, 0.0], BestStrategy=1, Confidence=0.958
+    │   └── False branch:
+    │       Node: if num__Last_purchase_day <= 26.500 (Gini=0.273, Samples=312, ClassDist=[0.16346153846153846, 0.8365384615384616, 0.0], BestStrategy=1, Confidence=0.837)
+    │       ├── True branch:
+    │       │   Leaf: Gini=0.482, Samples=74, ClassDist=[0.5945945945945946, 0.40540540540540543, 0.0], BestStrategy=0, Confidence=0.595
+    │       └── False branch:
+    │           Leaf: Gini=0.057, Samples=238, ClassDist=[0.029411764705882353, 0.9705882352941176, 0.0], BestStrategy=1, Confidence=0.971
+    └── False branch:
+        Node: if num__90days_purchase_time <= 3.500 (Gini=0.470, Samples=3974, ClassDist=[0.3761952692501258, 0.6235530951182687, 0.0002516356316054353], BestStrategy=1, Confidence=0.624)
+        ├── True branch:
+        │   Node: if num__90days_purchase_amount <= 788.500 (Gini=0.450, Samples=2273, ClassDist=[0.6577210734711835, 0.34227892652881653, 0.0], BestStrategy=0, Confidence=0.658)
+        │   ├── True branch:
+        │   │   Leaf: Gini=0.395, Samples=2016, ClassDist=[0.7291666666666666, 0.2708333333333333, 0.0], BestStrategy=0, Confidence=0.729
+        │   └── False branch:
+        │       Leaf: Gini=0.176, Samples=257, ClassDist=[0.09727626459143969, 0.9027237354085603, 0.0], BestStrategy=1, Confidence=0.903
+        └── False branch:
+            Node: if num__90days_purchase_amount <= 2586.000 (Gini=0.001, Samples=1701, ClassDist=[0.0, 0.9994121105232217, 0.0005878894767783657], BestStrategy=1, Confidence=0.999)
+            ├── True branch:
+            │   Leaf: Gini=0.000, Samples=1573, ClassDist=[0.0, 1.0, 0.0], BestStrategy=1, Confidence=1.000
+            └── False branch:
+                Leaf: Gini=0.016, Samples=128, ClassDist=[0.0, 0.9921875, 0.0078125], BestStrategy=1, Confidence=0.992
+
+=== Leaf 26 ===
+Rules:
+  - num__90days_coupon_ratio > 0.575
+  - num__90days_per_purchase_price > 157.500
+  - num__90days_purchase_time > 3.500
+  - num__90days_purchase_amount > 2586.000
+Best Strategy: T1
+Confidence: 0.99
+Samples: 128
+Class Dist: [0.0, 0.9921875, 0.0078125]
+Insight: Segment of 128 users. Best strategy = T1 (confidence=0.99).
+
+=== Leaf 25 ===
+Rules:
+  - num__90days_coupon_ratio > 0.575
+  - num__90days_per_purchase_price > 157.500
+  - num__90days_purchase_time > 3.500
+  - num__90days_purchase_amount <= 2586.000
+Best Strategy: T1
+Confidence: 1.00
+Samples: 1573
+Class Dist: [0.0, 1.0, 0.0]
+Insight: Segment of 1573 users. Best strategy = T1 (confidence=1.00).
+
+=== Leaf 23 ===
+Rules:
+  - num__90days_coupon_ratio > 0.575
+  - num__90days_per_purchase_price > 157.500
+  - num__90days_purchase_time <= 3.500
+  - num__90days_purchase_amount > 788.500
+Best Strategy: T1
+Confidence: 0.90
+Samples: 257
+Class Dist: [0.09727626459143969, 0.9027237354085603, 0.0]
+Insight: Segment of 257 users. Best strategy = T1 (confidence=0.90).
+
+=== Leaf 22 ===
+Rules:
+  - num__90days_coupon_ratio > 0.575
+  - num__90days_per_purchase_price > 157.500
+  - num__90days_purchase_time <= 3.500
+  - num__90days_purchase_amount <= 788.500
+Best Strategy: Control
+Confidence: 0.73
+Samples: 2016
+Class Dist: [0.7291666666666666, 0.2708333333333333, 0.0]
+Insight: Segment of 2016 users. Best strategy = Control (confidence=0.73).
+
+=== Leaf 19 ===
+Rules:
+  - num__90days_coupon_ratio > 0.575
+  - num__90days_per_purchase_price <= 157.500
+  - num__90days_per_purchase_price > 152.500
+  - num__Last_purchase_day > 26.500
+Best Strategy: T1
+Confidence: 0.97
+Samples: 238
+Class Dist: [0.029411764705882353, 0.9705882352941176, 0.0]
+Insight: Segment of 238 users. Best strategy = T1 (confidence=0.97).
+
+=== Leaf 18 ===
+Rules:
+  - num__90days_coupon_ratio > 0.575
+  - num__90days_per_purchase_price <= 157.500
+  - num__90days_per_purchase_price > 152.500
+  - num__Last_purchase_day <= 26.500
+Best Strategy: Control
+Confidence: 0.59
+Samples: 74
+Class Dist: [0.5945945945945946, 0.40540540540540543, 0.0]
+Insight: Segment of 74 users. Best strategy = Control (confidence=0.59).
+
+=== Leaf 16 ===
+Rules:
+  - num__90days_coupon_ratio > 0.575
+  - num__90days_per_purchase_price <= 157.500
+  - num__90days_per_purchase_price <= 152.500
+  - num__90days_per_purchase_price > 151.500
+Best Strategy: T1
+Confidence: 0.96
+Samples: 71
+Class Dist: [0.04225352112676056, 0.9577464788732394, 0.0]
+Insight: Segment of 71 users. Best strategy = T1 (confidence=0.96).
+
+=== Leaf 15 ===
+Rules:
+  - num__90days_coupon_ratio > 0.575
+  - num__90days_per_purchase_price <= 157.500
+  - num__90days_per_purchase_price <= 152.500
+  - num__90days_per_purchase_price <= 151.500
+Best Strategy: T1
+Confidence: 1.00
+Samples: 4907
+Class Dist: [0.0, 1.0, 0.0]
+Insight: Segment of 4907 users. Best strategy = T1 (confidence=1.00).
+
+=== Leaf 11 ===
+Rules:
+  - num__90days_coupon_ratio <= 0.575
+  - num__90days_per_purchase_price > 150.500
+  - num__90days_purchase_time > 3.500
+  - num__90days_purchase_amount > 742.000
+Best Strategy: T2
+Confidence: 1.00
+Samples: 2875
+Class Dist: [0.00034782608695652176, 0.0, 0.9996521739130435]
+Insight: Segment of 2875 users. Best strategy = T2 (confidence=1.00).
+
+=== Leaf 10 ===
+Rules:
+  - num__90days_coupon_ratio <= 0.575
+  - num__90days_per_purchase_price > 150.500
+  - num__90days_purchase_time > 3.500
+  - num__90days_purchase_amount <= 742.000
+Best Strategy: T2
+Confidence: 0.97
+Samples: 422
+Class Dist: [0.0, 0.03317535545023697, 0.966824644549763]
+Insight: Segment of 422 users. Best strategy = T2 (confidence=0.97).
+
+=== Leaf 8 ===
+Rules:
+  - num__90days_coupon_ratio <= 0.575
+  - num__90days_per_purchase_price > 150.500
+  - num__90days_purchase_time <= 3.500
+Best Strategy: Control
+Confidence: 1.00
+Samples: 6859
+Class Dist: [1.0, 0.0, 0.0]
+Insight: Segment of 6859 users. Best strategy = Control (confidence=1.00).
+
+=== Leaf 6 ===
+Rules:
+  - num__90days_coupon_ratio <= 0.575
+  - num__90days_per_purchase_price <= 150.500
+  - num__90days_purchase_amount > 212.500
+Best Strategy: T2
+Confidence: 1.00
+Samples: 6337
+Class Dist: [0.0, 0.0, 1.0]
+Insight: Segment of 6337 users. Best strategy = T2 (confidence=1.00).
+
+=== Leaf 5 ===
+Rules:
+  - num__90days_coupon_ratio <= 0.575
+  - num__90days_per_purchase_price <= 150.500
+  - num__90days_purchase_amount <= 212.500
+  - num__Last_purchase_day > 45.500
+Best Strategy: T2
+Confidence: 0.98
+Samples: 2149
+Class Dist: [0.0, 0.017682643089809214, 0.9823173569101907]
+Insight: Segment of 2149 users. Best strategy = T2 (confidence=0.98).
+
+=== Leaf 4 ===
+Rules:
+  - num__90days_coupon_ratio <= 0.575
+  - num__90days_per_purchase_price <= 150.500
+  - num__90days_purchase_amount <= 212.500
+  - num__Last_purchase_day <= 45.500
+Best Strategy: T2
+Confidence: 1.00
+Samples: 2094
+Class Dist: [0.0, 0.0004775549188156638, 0.9995224450811844]
+Insight: Segment of 2094 users. Best strategy = T2 (confidence=1.00).

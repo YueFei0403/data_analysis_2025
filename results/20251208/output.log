@@ -1,0 +1,82 @@
+[INFO] Logging initialized → results/20251208/output.log
+X shape: (30000, 7)
+Y shape: (30000,)
+T shape: (30000,)
+
+Training model for T1 vs Control...
+
+Training model for T2 vs Control...
+
+Inferences...
+
+=== Final Output ===
+       Userid   cate_T1   cate_T2 best_strategy_label
+0           1  0.039013  0.074396                实验组2
+1           2  0.022554  0.081134                实验组2
+2           3  0.032498  0.109553                实验组2
+3           4 -0.036726  0.057968                实验组2
+4           5  0.002857  0.084693                实验组2
+...       ...       ...       ...                 ...
+29995   29996  0.035783  0.125405                实验组2
+29996   29997 -0.008165  0.091001                实验组2
+29997   29998  0.833770  0.084892                实验组1
+29998   29999  0.024798  0.102917                实验组2
+29999   30000 -0.820075 -0.723785                 对照组
+
+[30000 rows x 4 columns]
+[Saved minimal business tree → results/20251208/minimal_business_strategy_tree.png]
+
+========= Best Strategy =========
+Node: if num__90days_coupon_ratio <= 0.575 (Gini=0.642, Samples=30000, ClassDist=[0.27946666666666664, 0.26066666666666666, 0.45986666666666665], BestStrategy=2, Confidence=0.460)
+├── True branch:
+│   Node: if num__90days_per_purchase_price <= 150.500 (Gini=0.448, Samples=20736, ClassDist=[0.33101851851851855, 0.0037133487654320988, 0.6652681327160493], BestStrategy=2, Confidence=0.665)
+│   ├── True branch:
+│   │   Node: if num__90days_purchase_amount <= 212.500 (Gini=0.010, Samples=10580, ClassDist=[0.0, 0.0048204158790170135, 0.995179584120983], BestStrategy=2, Confidence=0.995)
+│   │   ├── True branch:
+│   │   │   Node: if num__90days_purchase_amount <= 189.500 (Gini=0.023, Samples=4243, ClassDist=[0.0, 0.011784115012962526, 0.9882158849870375], BestStrategy=2, Confidence=0.988)
+│   │   │   ├── True branch:
+│   │   │   │   Leaf: Gini=0.013, Samples=3863, ClassDist=[0.0, 0.0064716541548019675, 0.993528345845198], BestStrategy=2, Confidence=0.994
+│   │   │   └── False branch:
+│   │   │       Leaf: Gini=0.123, Samples=380, ClassDist=[0.0, 0.06578947368421052, 0.9342105263157895], BestStrategy=2, Confidence=0.934
+│   │   └── False branch:
+│   │       Node: if num__90days_purchase_amount <= 241.000 (Gini=0.000, Samples=6337, ClassDist=[0.0, 0.00015780337699226762, 0.9998421966230078], BestStrategy=2, Confidence=1.000)
+│   │       ├── True branch:
+│   │       │   Leaf: Gini=0.003, Samples=628, ClassDist=[0.0, 0.0015923566878980893, 0.9984076433121019], BestStrategy=2, Confidence=0.998
+│   │       └── False branch:
+│   │           Leaf: Gini=0.000, Samples=5709, ClassDist=[0.0, 0.0, 1.0], BestStrategy=2, Confidence=1.000
+│   └── False branch:
+│       Node: if num__90days_purchase_time <= 3.500 (Gini=0.440, Samples=10156, ClassDist=[0.6758566364710515, 0.0025600630169358013, 0.3215833005120126], BestStrategy=0, Confidence=0.676)
+│       ├── True branch:
+│       │   Leaf: Gini=0.000, Samples=6859, ClassDist=[1.0, 0.0, 0.0], BestStrategy=0, Confidence=1.000
+│       └── False branch:
+│           Node: if num__90days_purchase_amount <= 750.000 (Gini=0.019, Samples=3297, ClassDist=[0.001516530178950561, 0.007885956930542918, 0.9905975128905066], BestStrategy=2, Confidence=0.991)
+│           ├── True branch:
+│           │   Leaf: Gini=0.103, Samples=441, ClassDist=[0.0, 0.05442176870748299, 0.9455782312925171], BestStrategy=2, Confidence=0.946
+│           └── False branch:
+│               Leaf: Gini=0.005, Samples=2856, ClassDist=[0.0017507002801120449, 0.0007002801120448179, 0.9975490196078431], BestStrategy=2, Confidence=0.998
+└── False branch:
+    Node: if num__90days_per_purchase_price <= 154.500 (Gini=0.274, Samples=9264, ClassDist=[0.16407599309153714, 0.8358160621761658, 0.0001079447322970639], BestStrategy=1, Confidence=0.836)
+    ├── True branch:
+    │   Node: if num__90days_per_purchase_price <= 152.500 (Gini=0.008, Samples=5124, ClassDist=[0.0039032006245121, 0.9960967993754879, 0.0], BestStrategy=1, Confidence=0.996)
+    │   ├── True branch:
+    │   │   Leaf: Gini=0.000, Samples=4978, ClassDist=[0.0, 1.0, 0.0], BestStrategy=1, Confidence=1.000
+    │   └── False branch:
+    │       Node: if num__Last_purchase_day <= 41.000 (Gini=0.236, Samples=146, ClassDist=[0.136986301369863, 0.863013698630137, 0.0], BestStrategy=1, Confidence=0.863)
+    │       ├── True branch:
+    │       │   Leaf: Gini=0.477, Samples=51, ClassDist=[0.39215686274509803, 0.6078431372549019, 0.0], BestStrategy=1, Confidence=0.608
+    │       └── False branch:
+    │           Leaf: Gini=0.000, Samples=95, ClassDist=[0.0, 1.0, 0.0], BestStrategy=1, Confidence=1.000
+    └── False branch:
+        Node: if num__90days_purchase_time <= 3.500 (Gini=0.462, Samples=4140, ClassDist=[0.36231884057971014, 0.6374396135265701, 0.00024154589371980676], BestStrategy=1, Confidence=0.637)
+        ├── True branch:
+        │   Node: if num__90days_purchase_amount <= 805.500 (Gini=0.464, Samples=2367, ClassDist=[0.6337135614702155, 0.36628643852978454, 0.0], BestStrategy=0, Confidence=0.634)
+        │   ├── True branch:
+        │   │   Leaf: Gini=0.425, Samples=2135, ClassDist=[0.6932084309133489, 0.30679156908665106, 0.0], BestStrategy=0, Confidence=0.693
+        │   └── False branch:
+        │       Leaf: Gini=0.158, Samples=232, ClassDist=[0.08620689655172414, 0.9137931034482759, 0.0], BestStrategy=1, Confidence=0.914
+        └── False branch:
+            Node: if num__90days_purchase_amount <= 2586.000 (Gini=0.001, Samples=1773, ClassDist=[0.0, 0.9994359842075579, 0.0005640157924421884], BestStrategy=1, Confidence=0.999)
+            ├── True branch:
+            │   Leaf: Gini=0.000, Samples=1643, ClassDist=[0.0, 1.0, 0.0], BestStrategy=1, Confidence=1.000
+            └── False branch:
+                Leaf: Gini=0.015, Samples=130, ClassDist=[0.0, 0.9923076923076923, 0.007692307692307693], BestStrategy=1, Confidence=0.992
