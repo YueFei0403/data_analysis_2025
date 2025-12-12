@@ -19,7 +19,10 @@ log_path = "./results/output.log"
 import warnings
 warnings.filterwarnings('ignore')
 
+#========= Helper Functions =========
 from helpers import *
+from run_visualizer import *
+#====================================
 
 from econml.cate_interpreter import SingleTreeCateInterpreter
 import matplotlib.pyplot as plt
@@ -206,7 +209,16 @@ for leaf in leaf_summaries:
     print("Insight:", leaf["insight"])
 
 
+numeric_df, cat_pct = generate_strategy_summary_table(
+    df,
+    numeric_features,
+    categorical_feature="User_os"
+)
 
+print(numeric_df.to_markdown())
+print(cat_pct.to_markdown())
+
+print_group_stat(df)
 ########################################################
 #       Re-evaluate Model Segmentation Ability         #
 ########################################################   

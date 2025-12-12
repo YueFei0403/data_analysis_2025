@@ -8,6 +8,7 @@ from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import plot_tree
 from sklearn.tree import export_text, export_graphviz
+from sklearn.tree import _tree
 import graphviz
 import matplotlib.pyplot as plt
 
@@ -258,3 +259,59 @@ def summarize_decision_tree_leaves(clf, feature_names, class_names):
         stack.append((tree.children_right[node_id], path_rules + [right_rule]))
 
     return leaf_summaries
+
+
+def extract_leaf_rules(clf, feature_names, X, y):
+    """
+    自动从 DecisionTreeClassifier 中提取每个 leaf 的路径规则：
+    输出 leaf_rules 字典：
+    
+    leaf_rules = {
+        leaf_id: [
+            (feature_name, "<=" or ">", threshold_value),
+            ...
+        ]
+    }
+    leaves = [
+        (leaf_id, samples_count, best_strategy_label)
+    ]
+    """
+    tree = clf.tree_
+    leaf_rules = {}
+    leaves = []
+    
+    def recurse(node, rule_list):
+        # leaf node
+        if tree.feature[node] == _tree.TREE_UNDEFINED:
+            leaf_id = node
+            
+            leaf_rules[leaf_id] = rule_list.copy()
+            
+            samples = tree.n_node_samples[node]
+            value = tree.value[node][0]
+            class_dist = value / value.sum()
+            best_class_idx = class_dist.argmax()
+            best_strategy = clf.classes_[best_class_idx]
+            
+            leaves.append((leaf_id, samples, best_strategy))
+            return
+        
+        # If not leaf node -> then splitting node
+        feature = feature_names[tree.feature[node]]
+        threshold = tree.threshold[node]
+        
+        # left: feature <= threshold
+        left_rule = rule_list.copy()
+        left_rule.append((feature, "<=", threshold))
+        recurse(tree.children_left[node], left_rule)
+        
+        right_rule = rule_list.copy()
+        right_rule.append((feature, ">", threshold))
+        recurse(tree.children_right[node], right_rule)
+        
+    # Start recursion at root
+    recurse(0, [])
+    
+    return leaf_rules, leaves
+        
+        
