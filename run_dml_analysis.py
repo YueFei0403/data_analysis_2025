@@ -19,6 +19,8 @@ log_path = "./results/output.log"
 import warnings
 warnings.filterwarnings('ignore')
 
+from helpers import *
+
 from econml.cate_interpreter import SingleTreeCateInterpreter
 import matplotlib.pyplot as plt
 
@@ -47,7 +49,7 @@ print(f"[INFO] Logging initialized -> {log_path}")
 ############################################
 #              Data Reading                #
 ############################################
-df = read_csv("user_data.csv")
+df = pd.read_csv("user_data.csv")
 
 FEATURE_COLS = [
     "User_os",
@@ -83,10 +85,10 @@ preprocessor = ColumnTransformer(
 ############################################
 #               Modeling                   #
 ############################################
-X_arr, Y_arr, T_arr, preprocessor = extract_feature_matrices(df)
-print("X shape": X_arr.shape)
-print("Y shape": Y_arr.shape)
-print("T shape": T_arr.shape)
+X_arr, Y_arr, T_arr, preprocessor = extract_feature_matrices(df, preprocessor)
+print("X shape:", X_arr.shape)
+print("Y shape:", Y_arr.shape)
+print("T shape:", T_arr.shape)
 
 # Dataset A: T1 vs Control
 mask_T1 = (T_arr == 0) | (T_arr == 1)
@@ -98,7 +100,7 @@ T_T1 = (T_arr[mask_T1] == 1).astype(int)
 mask_T2 = (T_arr == 0) | (T_arr == 2)
 X_T2 = X_arr[mask_T2]
 Y_T2 = Y_arr[mask_T2]
-T_T2 = (T_arr[mask_T2] == 1).astype(int)
+T_T2 = (T_arr[mask_T2] == 2).astype(int)
 
 cf_01 = CausalForestDML(
     model_t=RandomForestClassifier(n_estimators=100, max_depth=5),
@@ -165,3 +167,72 @@ plt.grid(alpha=0.3)
 filename = OUTPUT_DIR + "/cate_overall.png"
 if filename:
     plt.savefig(filename, dpi=500)
+    
+    
+X_features = X_arr.copy()
+y_strategy = df["best_strategy"]
+
+clf = DecisionTreeClassifier(
+    max_depth=4,
+    min_samples_leaf=50
+)
+clf.fit(X_features, y_strategy)
+
+feature_names = preprocessor.get_feature_names_out(FEATURE_COLS)
+class_names = ["Control", "T1", "T2"]
+
+plot_strategy_tree(
+    clf,
+    feature_names,
+    class_names,
+    save_path=os.path.join(OUTPUT_DIR, "strategy_tree.png")
+)
+
+print("\n=========== BEST STRATEGY ===========")
+print_tree_with_gini_best_confidence(clf, feature_names, class_names)
+
+leaf_summaries = summarize_decision_tree_leaves(
+    clf, feature_names, class_names
+)
+for leaf in leaf_summaries:
+    print("\n=== Leaf", leaf["leaf_id"], "===")
+    print("Rules:")
+    for r in leaf["rule"]:
+        print("  -", r)
+    print("Best Strategy:", leaf["best_strategy"])
+    print("Confidence:", f"{leaf['confidence']:.2f}")
+    print("Samples:", leaf["samples"])
+    print("Class Dist:", leaf["class_distribution"])
+    print("Insight:", leaf["insight"])
+
+
+
+########################################################
+#       Re-evaluate Model Segmentation Ability         #
+########################################################   
+# T1 vs Control
+x1, qini1 = compute_qini_curve(
+    ite=cate_T1[mask_T1],
+    y=Y_arr[mask_T1],
+    t_bin=(T_arr[mask_T1] == 1).astype(int)
+)
+
+# T2 vs Control
+x2, qini2 = compute_qini_curve(
+    ite=cate_T2[mask_T2],
+    y=Y_arr[mask_T2],
+    t_bin=(T_arr[mask_T2] == 2).astype(int)
+)
+
+plt.figure(figsize=(10, 6))
+plt.plot(x1, qini1, label="Qini Curve T1", linewidth=2)
+plt.plot(x2, qini2, label="Qini Curve T2", linewidth=2)
+plt.axhline(0, color="black", linestyle="--", linewidth=1)
+plt.title("Qini Curves for T1 and T2")
+plt.xlabel("Population Portion (sorted by uplift)")
+plt.ylabel("Cumulative Incremental Gain")
+plt.grid(alpha=0.3)
+plt.legend()
+filename = OUTPUT_DIR + "/qini_overall.png"
+if filename:
+    plt.savefig(filename, dpi=300)
